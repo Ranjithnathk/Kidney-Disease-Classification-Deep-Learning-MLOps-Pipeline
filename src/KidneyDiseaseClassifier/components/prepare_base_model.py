@@ -69,9 +69,9 @@ class PrepareBaseModel:
     def save_model(path: Path, model: tf.keras.Model):
         path = str(path)
         if not path.endswith(".h5"):
-            path += ".h5" 
+            path += ".h5"
         model.save_weights(path)
-        print(f"Model weights saved to {path}")
+        print(f"Full model saved to {path}")
 
 
 
