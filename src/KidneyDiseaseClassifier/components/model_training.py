@@ -5,6 +5,7 @@ import tensorflow as tf
 import time
 from pathlib import Path
 from KidneyDiseaseClassifier.entity.config_entity import TrainingConfig
+#from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 
 
 class Training:
@@ -13,32 +14,16 @@ class Training:
 
     
     def get_base_model(self):
-        # 1. Rebuild the same architecture
-        base_model = tf.keras.applications.EfficientNetB0(
-            input_shape=self.config.params_image_size,
-            weights=self.config.params_weights,  # e.g., "imagenet"
-            include_top=self.config.params_include_top
-        )
+        # Load the saved updated base model (.keras)
+        self.model = tf.keras.models.load_model(self.config.updated_base_model_path)
+        #self.model.summary()
 
-        flatten_in = tf.keras.layers.Flatten()(base_model.output)
-        prediction = tf.keras.layers.Dense(
-            units=4,  # You have 4 classes
-            activation="softmax"
-        )(flatten_in)
-
-        self.model = tf.keras.models.Model(
-            inputs=base_model.input,
-            outputs=prediction
-        )
-
+        # Compile the model again after loading
         self.model.compile(
-            optimizer=tf.keras.optimizers.SGD(learning_rate=0.0001),
+            optimizer=tf.keras.optimizers.Adam(learning_rate=self.config.params_learning_rate),
             loss=tf.keras.losses.CategoricalCrossentropy(),
             metrics=["accuracy"]
         )
-
-        # 2. Load weights from .h5
-        self.model.load_weights(self.config.updated_base_model_path)
 
     def train_valid_generator(self):
 
@@ -87,7 +72,10 @@ class Training:
     
     @staticmethod
     def save_model(path: Path, model: tf.keras.Model):
-        model.save_weights(path)
+        path = str(path)
+        if not path.endswith(".keras"):
+            path += ".keras"
+        model.save(path)
 
 
 
@@ -96,12 +84,21 @@ class Training:
         self.steps_per_epoch = self.train_generator.samples // self.train_generator.batch_size
         self.validation_steps = self.valid_generator.samples // self.valid_generator.batch_size
 
+        """
+        # Add callbacks
+        callbacks = [
+            EarlyStopping(monitor='val_loss', patience=3, restore_best_weights=True),
+            ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=2, verbose=1)
+        ]
+        """
+        
         self.model.fit(
             self.train_generator,
             epochs=self.config.params_epochs,
             steps_per_epoch=self.steps_per_epoch,
             validation_steps=self.validation_steps,
-            validation_data=self.valid_generator
+            validation_data=self.valid_generator,
+            #callbacks=callbacks
         )
 
         self.save_model(

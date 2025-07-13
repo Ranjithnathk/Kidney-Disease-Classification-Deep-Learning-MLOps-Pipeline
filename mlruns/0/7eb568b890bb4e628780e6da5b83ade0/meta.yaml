@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/ranji/My%20Projects/Projects/Kidney-Disease-Classification-Deep-Learning-MLOps-Pipeline/mlruns/0/7eb568b890bb4e628780e6da5b83ade0/artifacts
+end_time: 1752357375713
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 7eb568b890bb4e628780e6da5b83ade0
+run_name: capricious-sheep-48
+run_uuid: 7eb568b890bb4e628780e6da5b83ade0
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1752357333812
+status: 4
+tags: []
+user_id: ranji

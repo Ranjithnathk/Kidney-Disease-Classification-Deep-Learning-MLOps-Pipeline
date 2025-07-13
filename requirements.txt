@@ -16,4 +16,10 @@ scipy
 Flask
 Flask-Cors
 boto3
+dagshub
+python-dotenv
+numpy
+scikit-learn
+matplotlib
+seaborn
 -e .
