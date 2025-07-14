@@ -22,4 +22,5 @@ scikit-learn
 streamlit
 Pillow
 requests
+git-filter-repo
 -e .
