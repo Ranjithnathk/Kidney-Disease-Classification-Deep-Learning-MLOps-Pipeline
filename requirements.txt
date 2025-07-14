@@ -1,9 +1,9 @@
-tensorflow
+tensorflow==2.12.0
 pandas 
 dvc
 mlflow
 notebook
-numpy
+numpy==1.23.5
 matplotlib
 seaborn
 python-box
@@ -13,14 +13,15 @@ ensure
 joblib
 types-PyYAML
 scipy
-flask
+flask==2.2.5
 flask-cors
 boto3
 dagshub
 python-dotenv
 scikit-learn
-streamlit
-Pillow
-requests
+streamlit==1.27.2
+Pillow==9.5.0
+requests==2.31.0
 git-filter-repo
+importlib-metadata==6.11.0
 -e .
