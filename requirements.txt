@@ -13,13 +13,13 @@ ensure
 joblib
 types-PyYAML
 scipy
-Flask
-Flask-Cors
+flask
+flask-cors
 boto3
 dagshub
 python-dotenv
-numpy
 scikit-learn
-matplotlib
-seaborn
+streamlit
+Pillow
+requests
 -e .
