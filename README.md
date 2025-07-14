@@ -41,3 +41,5 @@ pip install -r requirements.txt
 # run the following command
 python app.py
 ```
+
+### STEP 03 - 
