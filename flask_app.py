@@ -7,7 +7,7 @@ import io
 
 app = Flask(__name__)
 
-MODEL_PATH = "model/model.keras"
+MODEL_PATH = "artifacts/training/model.keras"
 model = load_model(MODEL_PATH)
 class_labels = ["Cyst", "Normal", "Stone", "Tumor"]
 
