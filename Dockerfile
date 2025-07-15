@@ -1,22 +1,18 @@
 FROM python:3.8-slim-bullseye
 
-# Set working directory
 WORKDIR /app
-
-# Copy project files into container
 COPY . /app
 
-# Install essential system tools
-RUN apt update -y && apt install -y curl awscli
+# Install dependencies
+RUN apt update -y && apt install -y curl awscli && \
+    pip install --no-cache-dir --upgrade pip setuptools wheel && \
+    pip install --no-cache-dir -r requirements.txt
 
-# Upgrade pip and setuptools
-RUN pip install --no-cache-dir --upgrade pip setuptools wheel
+EXPOSE 5000
+EXPOSE 8501
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Use supervisord to run both Flask and Streamlit properly
+RUN apt install -y supervisor
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Expose Streamlit (frontend) and Flask (backend) ports
-EXPOSE 8080 5000
-
-# Launch Flask and Streamlit apps in parallel
-CMD ["sh", "-c", "python flask_app.py & streamlit run app.py --server.port=8080 --server.address=0.0.0.0 --server.enableCORS=false"]
+CMD ["/usr/bin/supervisord"]
