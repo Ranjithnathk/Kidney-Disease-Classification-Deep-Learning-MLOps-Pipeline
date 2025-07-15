@@ -1,19 +1,22 @@
 FROM python:3.8-slim-bullseye
 
+# Set working directory
 WORKDIR /app
 
+# Copy project files into container
 COPY . /app
 
-# Update apt and install tools
+# Install essential system tools
 RUN apt update -y && apt install -y curl awscli
 
-# Upgrade pip and setuptools to avoid conflicts
+# Upgrade pip and setuptools
 RUN pip install --no-cache-dir --upgrade pip setuptools wheel
 
-# Install dependencies
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-EXPOSE 8080
+# Expose Streamlit (frontend) and Flask (backend) ports
+EXPOSE 8080 5000
 
-# Start both Flask (backend) and Streamlit (frontend)
-CMD ["sh", "-c", "python flask_app.py & streamlit run app.py --server.port=8080 --server.enableCORS=false"]
+# Launch Flask and Streamlit apps in parallel
+CMD ["sh", "-c", "python flask_app.py & streamlit run app.py --server.port=8080 --server.address=0.0.0.0 --server.enableCORS=false"]

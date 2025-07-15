@@ -2,9 +2,10 @@ import streamlit as st
 import requests
 from PIL import Image
 import io
+import os
 
 # Backend Flask API endpoint
-API_URL = "http://3.144.116.189:8080/predict"
+API_URL = os.getenv("FLASK_API_URL", "http://localhost:5000/predict")
 
 # Title
 st.title("Kidney Disease Classification")
