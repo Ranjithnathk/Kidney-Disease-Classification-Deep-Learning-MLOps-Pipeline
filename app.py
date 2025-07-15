@@ -4,7 +4,7 @@ from PIL import Image
 import io
 
 # Backend Flask API endpoint
-API_URL = "http://127.0.0.1:5000/predict"
+API_URL = "http://3.144.116.189:8080/predict"
 
 # Title
 st.title("Kidney Disease Classification")
