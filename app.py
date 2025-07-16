@@ -5,7 +5,8 @@ import io
 
 # Backend Flask API endpoint
 #API_URL = "http://localhost:5000/predict"
-API_URL = "http://host.docker.internal:5000/predict"
+#API_URL = "http://host.docker.internal:5000/predict"
+API_URL = "http://172.17.0.1:5000/predict"
 
 # Title
 st.title("Kidney Disease Classification")
