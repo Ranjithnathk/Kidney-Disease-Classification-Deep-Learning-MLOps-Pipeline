@@ -4,10 +4,16 @@ from tensorflow.keras.preprocessing import image
 import numpy as np
 from PIL import Image
 import io
+import os
+import subprocess
 
 app = Flask(__name__)
 
 MODEL_PATH = "artifacts/training/model.keras"
+S3_URI = "s3://ct-kideny-data/model/model.keras"
+if not os.path.exists(MODEL_PATH):
+    os.makedirs(os.path.dirname(MODEL_PATH), exist_ok=True)
+    subprocess.run(["aws", "s3", "cp", S3_URI, MODEL_PATH], check=True)
 model = load_model(MODEL_PATH)
 class_labels = ["Cyst", "Normal", "Stone", "Tumor"]
 
